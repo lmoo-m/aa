@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tsparticles/1.18.11/tsparticles.min.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Schoolbell&display=swap");
+
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        overflow: hidden;
+        background: black;
+      }
+
+      .in {
+        animation: blinkin 4s forwards;
+      }
+
+      .out {
+        animation: blinkout 1s forwards;
+      }
+
+      .content {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #text {
+        overflow: hidden;
+        z-index: 99;
+        display: inline-block;
+        color: white;
+        text-shadow: 0 0 15px white;
+        white-space: nowrap;
+        font-family: "Schoolbell", cursive;
+        letter-spacing: 2px;
+        font-size: 2.4em;
+        text-align: center;
+      }
+
+      @keyframes blinkout {
+        from {
+          opacity: 1;
+        }
+        to {
+          opacity: 0;
+        }
+      }
+
+      @keyframes blinkin {
+        from {
+          width: 0;
+        }
+        to {
+          width: 50%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="particles"
+      style="position: absolute; width: 100%; z-index: 1"
+    ></div>
+    <div class="content">
+      <h1 id="text"></h1>
+    </div>
+
+    <script>
+      tsParticles.load("particles", {
+        particles: {
+          number: {
+            value: 20,
+          },
+          move: {
+            enable: true,
+          },
+          color: {
+            value: "#ffff",
+          },
+          shape: {
+            type: "square",
+          },
+          size: {
+            value: 20,
+            random: true,
+            animation: {
+              enable: true,
+              speed: 5,
+              sync: true,
+            },
+            move: {
+              enable: true,
+            },
+          },
+        },
+      });
+
+      const musik = new Audio("musik.mp3");
+      const text = document.getElementById("text");
+
+      const lyric = [
+        {
+          text: "Karna bersamamu semua terasa indah",
+          delay: 2500,
+          duration: 5000,
+        },
+        {
+          text: "Gundah gulana hatiku pun hancur sirna",
+          delay: 8500,
+          duration: 4500,
+        },
+        {
+          text: "Janjiku takkan ku lepas",
+          delay: 14000,
+          duration: 2500,
+        },
+        {
+          text: "Wahai kau bidadariku dari surga",
+          delay: 17500,
+          duration: 4000,
+        },
+        {
+          text: "Selamanya...",
+          delay: 22500,
+          duration: 11000,
+        },
+      ];
+
+      const start = () => {
+        musik.play();
+        lyric.map((data) => {
+          setTimeout(() => {
+            text.classList.remove("out");
+            text.classList.add("in");
+            text.textContent = data.text;
+
+            setTimeout(() => {
+              text.classList.remove("in");
+              text.classList.add("out");
+            }, data.duration);
+          }, data.delay);
+        });
+      };
+
+      window.addEventListener("keypress", start);
+    </script>
+  </body>
+</html>
